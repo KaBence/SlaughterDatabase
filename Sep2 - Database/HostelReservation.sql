@@ -1,3 +1,5 @@
+drop schema if exists hostelReservation cascade;
+
 create schema if not exists hostelReservation;
 
 set schema 'hostelreservation';
@@ -22,8 +24,16 @@ values (20,1,18,'East',true,false,true,true,270);
 
 create table "user"(
     username varchar(100) primary key,
-    password int
+    password varchar(100)
 );
+
+INSERT INTO "user"(username, password)
+values('john@hotmail.com', 'k13579');
+
+insert into "user" (username, password)
+values ('12345','54321');
+
+
 
 create table Employee(
     username varchar(100) PRIMARY KEY,
@@ -33,6 +43,9 @@ create table Employee(
     position varchar(100),
    FOREIGN KEY (username) references "user" (username)
 );
+
+INSERT INTO Employee(username, firstName, lastName, phoneNo, position)
+values('12345', 'Bob', 'Wick', 97531, 'manager');
 
 create table ReservedBy(
     roomNo int,
@@ -45,6 +58,10 @@ create table ReservedBy(
     FOREIGN KEY (username) references "user"(username)
 );
 
+INSERT INTO ReservedBy(roomNo, username, fromDate, toDate, checkedIn)
+VALUES(10, 'john@hotmail.com','2023/4/10', '2023/4/15', true);
+
+
 
 create table Review(
     username varchar(100),
@@ -56,6 +73,9 @@ create table Review(
     foreign key (username,roomNo,fromDate) references reservedby(username,roomNo,fromDate)
 );
 
+INSERT INTO Review(username, roomNo, fromDate, postedDate, comment)
+VALUES('john@hotmail.com', 10, '2023/4/10', '2023/4/16', 'WoW');
+
 create table Customer(
     username    varchar(100) PRIMARY KEY,
     firstName   varchar(100),
@@ -64,3 +84,6 @@ create table Customer(
     paymentInfo varchar(100),
     FOREIGN KEY (username) references "user"(username)
 );
+
+INSERT INTO Customer(username, firstName, lastName, phoneNo, paymentInfo)
+VALUES('john@hotmail.com', 'John', 'Doe', 97531, 'PayPal');
