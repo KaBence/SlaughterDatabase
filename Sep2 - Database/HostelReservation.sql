@@ -124,3 +124,25 @@ create table Customer(
 
 INSERT INTO Customer(username, firstName, lastName, phoneNo, paymentInfo)
 VALUES('john@hotmail.com', 'John', 'Doe', 97531, 'PayPal');
+
+
+CREATE FUNCTION delete_review() RETURNS trigger
+
+    LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    DELETE
+    FROM review
+    WHERE hostelReservation.review.username = old.username
+      AND hostelReservation.review.roomno = old.roomno
+      AND hostelReservation.review.fromdate = old.fromdate;
+    RETURN old;
+END;
+$$;
+
+CREATE TRIGGER delete_review
+    BEFORE Delete
+    on ReservedBy
+    for each row
+EXECUTE function delete_review()
