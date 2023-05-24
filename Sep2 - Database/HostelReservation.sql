@@ -36,7 +36,7 @@ as
 
 create table Room(
     roomNo int primary key ,
-    noBeds int,
+    noBeds int,-
     size int,
     orientation varchar(20),
     internet boolean,
@@ -53,6 +53,12 @@ values (10,2,25,'West',true,true,false,false,300,'Free');
 insert into room (roomNo, noBeds, size, orientation, internet, bathroom, kitchen, balcony, price,status)
 values (20,1,18,'East',true,false,true,true,270,'Free');
 
+insert into room (roomNo, noBeds, size, orientation, internet, bathroom, kitchen, balcony, price,status)
+values (35,2,40,'West',true,true,true,true,500,'Free');
+
+insert into room (roomNo, noBeds, size, orientation, internet, bathroom, kitchen, balcony, price,status)
+values (40,3,30,'West',true,false,false,false,200,'Free');
+
 create table "user"(
     username varchar(100) primary key,
     password varchar(100)
@@ -62,8 +68,20 @@ INSERT INTO "user"(username, password)
 values('john@hotmail.com', 'k13579');
 
 insert into "user" (username, password)
+values ('Bob@gmail.com','fv1487');
+
+
+insert into "user"(username, password)
+values('sam@hotmail.com', 's098765');
+
+insert into "user" (username, password)
 values ('12345','54321');
 
+insert into "user" (username, password)
+values ('6258','6258');
+
+insert into "user" (username, password)
+values ('7894','6258');
 
 
 create table Employee(
@@ -77,6 +95,12 @@ create table Employee(
 
 INSERT INTO Employee(username, firstName, lastName, phoneNo, position)
 values('12345', 'Bob', 'Wick', 97531, 'manager');
+
+insert into Employee(username, firstName, lastName, phoneNo, position)
+values('6258', 'Dan', 'Nol', 004531323334, 'manager');
+
+insert into Employee(username, firstName, lastName, phoneNo, position)
+values('7894', 'Anne', 'Marie', 004510293847, 'Receptionist');
 
 create table ReservedBy(
     roomNo int,
@@ -98,6 +122,8 @@ create or replace trigger changeStatus
 INSERT INTO ReservedBy(roomNo, username, fromDate, toDate, checkedIn)
 VALUES(10, 'john@hotmail.com','2023/4/10', '2023/4/15', true);
 
+insert into reservedby (roomNo, username, fromDate, toDate, checkedIn)
+values (40,'Bob@gmail.com','2023/3/30','2023/4/4',null);
 
 
 create table Review(
@@ -113,6 +139,9 @@ create table Review(
 INSERT INTO Review(username, roomNo, fromDate, postedDate, comment)
 VALUES('john@hotmail.com', 10, '2023/4/10', '2023/4/16', 'WoW');
 
+insert into Review(username, roomNo, fromDate, postedDate, comment)
+values ('Bob@gmail.com', 40, '2023/3/30', '2023/4/5', 'good establishment');
+
 create table Customer(
     username    varchar(100) PRIMARY KEY,
     firstName   varchar(100),
@@ -124,6 +153,12 @@ create table Customer(
 
 INSERT INTO Customer(username, firstName, lastName, phoneNo, paymentInfo)
 VALUES('john@hotmail.com', 'John', 'Doe', 97531, 'PayPal');
+
+insert into customer (username, firstName, lastName, phoneNo, paymentInfo)
+values ('Bob@gmail.com','Bob','Bobbinson',52147,'Google pay');
+
+insert into customer (username, firstName, lastName, phoneNo, paymentInfo)
+values ('sam@hotmail.com','Sam','Jack',004509213476,'Mobile Pay');
 
 
 CREATE FUNCTION delete_review() RETURNS trigger
@@ -145,4 +180,24 @@ CREATE TRIGGER delete_review
     BEFORE Delete
     on ReservedBy
     for each row
-EXECUTE function delete_review()
+EXECUTE function delete_review();
+
+
+CREATE FUNCTION delete_Customer() RETURNS trigger
+
+    LANGUAGE plpgsql
+AS
+$$
+BEGIN
+    DELETE
+    FROM customer
+    WHERE hostelReservation.customer.username = old.username;
+    RETURN old;
+END;
+$$;
+
+CREATE TRIGGER delete_Customer
+    BEFORE Delete
+    on "user"
+    for each row
+EXECUTE function delete_Customer();
