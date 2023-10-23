@@ -36,7 +36,7 @@ as
 
 create table Room(
     roomNo int primary key ,
-    noBeds int,-
+    noBeds int,
     size int,
     orientation varchar(20),
     internet boolean,
@@ -68,7 +68,7 @@ INSERT INTO "user"(username, password)
 values('john@hotmail.com', 'k13579');
 
 insert into "user" (username, password)
-values ('Bob@gmail.com','fv1487');
+values ('Bob@gmail.com','6241');
 
 
 insert into "user"(username, password)
