@@ -3,5 +3,6 @@ create schema DistributionSystem;
 set schema 'distributionsystem';
 
 create table testtable(
-    valami varchar(50)
+    id SERIAL PRIMARY KEY,
+    string_test  varchar(100) not null
 );
