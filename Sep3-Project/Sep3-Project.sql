@@ -1,3 +1,5 @@
+drop schema if exists distributionsystem cascade ;
+
 create schema DistributionSystem;
 
 set schema 'distributionsystem';
