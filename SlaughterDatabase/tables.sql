@@ -8,8 +8,8 @@ create table Animal(
     anm_id serial primary key ,
     weight double precision,
     dateOfDeath date,
-    farm int
-
+    farm int,
+    contaminated bool
 );
 
 create table OneKindPackage(
@@ -39,8 +39,7 @@ VALUES (35,'2023/5/11',2 );
 create table Tray(
     tray_id serial primary key ,
     maxWeight double precision
-
-);
+    );
 
 insert into Tray(tray_id,maxWeight)
 VALUES (1,25);
@@ -53,6 +52,7 @@ create table AnimalPart(
     tray_id int,
     OneKindPackege_id int,
     HalfAnAnimalPackage_id int,
+    contaminated bool,
     FOREIGN KEY (anm_id) references Animal(anm_id),
     FOREIGN KEY (tray_id) references Tray(tray_id),
 
