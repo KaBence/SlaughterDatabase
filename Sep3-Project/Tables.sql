@@ -26,7 +26,7 @@ create table Customer(
 
 create table Review(
     text varchar(50),
-    star varchar(50),
+    star double precision,
     farmerID varchar(50) references Farmer(phonenumber),
     customerID varchar(50) references Customer(phonenumber),
     primary key (farmerID,customerID)
@@ -42,16 +42,16 @@ create table Comment(
 create table "order"(
     orderID serial primary key,
     status varchar(50),
-    date date,
+    "date" date,
     customerID varchar(50) references Customer(phonenumber)
 );
 
 create table Product(
     productID serial primary key,
     availability bool,
-    amount int,
+    amount double precision,
     type varchar(50),
-    price int,
+    price double precision,
     pickedDate date,
     expirationDate date,
     farmerID varchar(50) references Farmer(phonenumber)
@@ -59,10 +59,10 @@ create table Product(
 
 create table receipt(
     orderID int references "order"(orderID),
-    amount int,
-    price int,
+    amount double precision,
+    price double precision,
     paymentMethod varchar(50),
-    paymentDate varchar(50),
+    paymentDate date,
     text varchar(100),
     farmerID varchar(50) references Farmer(phonenumber),
     customerID varchar(50) references Customer(phonenumber),
@@ -72,7 +72,7 @@ create table receipt(
 create table OrderItem(
     orderID int,
     productID int,
-    amount int,
+    amount double precision,
     primary key (orderID,productID),
     foreign key (orderID) references "order"(orderID),
     foreign key (productID) references Product(productID)
