@@ -38,16 +38,11 @@ VALUES (35,'2023/5/11',2 );
 
 create table Tray(
     tray_id serial primary key ,
-    maxWeight double precision,
-    OneKindPackege_id int,
-    HalfAnAnimalPackage_id int,
-    FOREIGN KEY (OneKindPackege_id) references OneKindPackage(package_id),
-    FOREIGN KEY (HalfAnAnimalPackage_id) references HalfAnAnimalPackage(package_id)
-);
+    maxWeight double precision
+    );
 
-insert into Tray(tray_id,maxWeight,OneKindPackege_id, HalfAnAnimalPackage_id)
-VALUES (1,25,1,null);
-
+insert into Tray(tray_id,maxWeight)
+VALUES (1,25);
 
 create table AnimalPart(
     p_id serial primary key ,
@@ -55,9 +50,14 @@ create table AnimalPart(
     weight double precision,
     anm_id int,
     tray_id int,
+    OneKindPackege_id int,
+    HalfAnAnimalPackage_id int,
     contaminated bool,
     FOREIGN KEY (anm_id) references Animal(anm_id),
-    FOREIGN KEY (tray_id) references Tray(tray_id)
+    FOREIGN KEY (tray_id) references Tray(tray_id),
+
+    FOREIGN KEY (OneKindPackege_id) references OneKindPackage(package_id),
+    FOREIGN KEY (HalfAnAnimalPackage_id) references HalfAnAnimalPackage(package_id)
 
 );
 
