@@ -25,11 +25,11 @@ create table Customer(
 );
 
 create table Review(
-    reviewID serial primary key,
     text varchar(50),
     star varchar(50),
     farmerID varchar(50) references Farmer(phonenumber),
-    customerID varchar(50) references Customer(phonenumber)
+    customerID varchar(50) references Customer(phonenumber),
+    primary key (farmerID,customerID)
 );
 
 create table Comment(
@@ -58,14 +58,15 @@ create table Product(
 );
 
 create table receipt(
-    orderID int primary key references "order"(orderID),
+    orderID int references "order"(orderID),
     amount int,
     price int,
     paymentMethod varchar(50),
     paymentDate varchar(50),
     text varchar(100),
     farmerID varchar(50) references Farmer(phonenumber),
-    customerID varchar(50) references Customer(phonenumber)
+    customerID varchar(50) references Customer(phonenumber),
+    primary key (orderID,farmerID,customerID)
 );
 
 create table OrderItem(
