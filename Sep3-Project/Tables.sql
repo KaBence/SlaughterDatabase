@@ -6,7 +6,8 @@ set schema 'distributionsystem';
 
 create table "user"(
     phonenumber varchar(50) primary key,
-    password varchar(50)
+    password varchar(50),
+    active bool
 );
 
 create table Farmer(
@@ -14,7 +15,8 @@ create table Farmer(
     firstname varchar(50),
     lastname varchar(50),
     address varchar(50),
-    pestecides bool
+    pestecides bool,
+    rating double precision
 );
 
 create table Customer(
