@@ -16,6 +16,7 @@ create table Farmer(
     lastname varchar(50),
     address varchar(50),
     pestecides bool,
+    farmName varchar(50),
     rating double precision
 );
 
@@ -52,15 +53,16 @@ create table Product(
     productID serial primary key,
     availability bool,
     amount double precision,
-    type varchar(50),
+    "type" varchar(50),
     price double precision,
     pickedDate date,
     expirationDate date,
     farmerID varchar(50) references Farmer(phonenumber)
 );
 
-create table receipt(
+create table Receipt(
     orderID int references "order"(orderID),
+    processed bool,
     amount double precision,
     price double precision,
     paymentMethod varchar(50),
@@ -68,7 +70,7 @@ create table receipt(
     text varchar(100),
     farmerID varchar(50) references Farmer(phonenumber),
     customerID varchar(50) references Customer(phonenumber),
-    primary key (orderID,farmerID,customerID)
+    primary key (orderID,farmerID,customerID,processed)
 );
 
 create table OrderItem(
