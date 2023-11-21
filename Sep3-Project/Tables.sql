@@ -6,8 +6,7 @@ set schema 'distributionsystem';
 
 create table "user"(
     phonenumber varchar(50) primary key,
-    password varchar(50),
-    active bool
+    password varchar(50)
 );
 
 create table Farmer(
