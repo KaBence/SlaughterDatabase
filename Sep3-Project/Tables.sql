@@ -80,3 +80,34 @@ create table OrderItem(
     foreign key (orderID) references "order"(orderID),
     foreign key (productID) references Product(productID)
 );
+
+/*
+create or replace function avl()
+    returns TRIGGER
+    language plpgsql
+as
+    $$
+    declare
+        prod int;
+        am int;
+    begin
+        prod=new.productid;
+        am= new.amount;
+        if am<=0 then
+            update product set availability=false where productid=prod;
+        end if;
+
+        /*update product set availability=false where new.expirationDate>now() and productid=prod;*/
+        return new;
+    end;
+    $$;
+
+create or replace trigger changeAvl
+    after update
+    on product
+    for each row
+    execute function avl();
+
+update product set amount=0 where productID=1;
+
+ */
