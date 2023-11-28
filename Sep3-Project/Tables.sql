@@ -41,8 +41,10 @@ create table Comment(
     customerID varchar(50) references Customer(phonenumber)
 );
 
+
 create table "order"(
     orderID serial primary key,
+    orderGroup int,
     status varchar(50),
     "date" date,
     customerID varchar(50) references Customer(phonenumber)
@@ -62,7 +64,6 @@ create table Product(
 create table Receipt(
     orderID int references "order"(orderID),
     processed bool,
-    amount double precision,
     price double precision,
     paymentMethod varchar(50),
     paymentDate date,
