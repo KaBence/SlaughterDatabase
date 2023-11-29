@@ -112,3 +112,18 @@ create or replace trigger changeAvl
 update product set amount=0 where productID=1;
 
  */
+
+ CREATE OR REPLACE FUNCTION update_availability()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.amount <= 0 THEN
+        NEW.availability := FALSE;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_availability
+BEFORE UPDATE ON Product
+FOR EACH ROW
+EXECUTE FUNCTION update_availability();
