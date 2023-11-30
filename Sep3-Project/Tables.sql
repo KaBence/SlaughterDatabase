@@ -64,6 +64,7 @@ create table Product(
 create table Receipt(
     orderID int references "order"(orderID),
     processed bool,
+    status varchar(50),
     price double precision,
     paymentMethod varchar(50),
     paymentDate date,
@@ -82,37 +83,6 @@ create table OrderItem(
     foreign key (productID) references Product(productID)
 );
 
-/*
-create or replace function avl()
-    returns TRIGGER
-    language plpgsql
-as
-    $$
-    declare
-        prod int;
-        am int;
-    begin
-        prod=new.productid;
-        am= new.amount;
-        if am<=0 then
-            update product set availability=false where productid=prod;
-        end if;
-
-        /*update product set availability=false where new.expirationDate>now() and productid=prod;*/
-        return new;
-    end;
-    $$;
-
-create or replace trigger changeAvl
-    after update
-    on product
-    for each row
-    execute function avl();
-
-update product set amount=0 where productID=1;
-
- */
-
  CREATE OR REPLACE FUNCTION update_availability()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -127,3 +97,17 @@ CREATE TRIGGER trigger_update_availability
 BEFORE UPDATE ON Product
 FOR EACH ROW
 EXECUTE FUNCTION update_availability();
+/*
+select * from receipt where customerid='0000' and orderID=(select orderID from "order" where orderGroup=322);
+
+select * from receipt join "order" o on o.orderID = receipt.orderID where Receipt.customerID='0000' and o.orderGroup=322;
+
+select o.orderID,p.productID,OrderItem.amount,p.type,p.price,f.farmName from orderitem
+    join "order" o on o.orderID = orderitem.orderID
+    join product p on orderitem.productID = p.productid
+    join farmer f on f.phonenumber = p.farmerid
+    where o.orderGroup=322;
+
+
+insert into receipt (orderID, processed, status, price, paymentMethod, paymentDate, text, farmerID, customerID)
+values ();
