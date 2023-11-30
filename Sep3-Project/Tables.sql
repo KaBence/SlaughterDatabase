@@ -37,8 +37,9 @@ create table Review(
 create table Comment(
     commentID serial primary key,
     text varchar(100),
-    farmerID varchar(50) references Farmer(phonenumber),
-    customerID varchar(50) references Customer(phonenumber)
+    farmerID varchar(50),
+    customerID varchar(50),
+    FOREIGN KEY (farmerID,customerID) references review(farmerid,customerid)
 );
 
 
