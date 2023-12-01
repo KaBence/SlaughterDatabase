@@ -98,7 +98,35 @@ CREATE TRIGGER trigger_update_availability
 BEFORE UPDATE ON Product
 FOR EACH ROW
 EXECUTE FUNCTION update_availability();
+
 /*
+WITH RankedReceipts AS (
+    SELECT
+        orderID,
+        farmerID,
+        customerID,
+        processed,
+        status,
+        price,
+        paymentMethod,
+        paymentDate,
+        text,
+        ROW_NUMBER() OVER (PARTITION BY orderID ORDER BY processed DESC) AS row_num
+    FROM Receipt
+)
+SELECT
+    orderID,
+    farmerID,
+    customerID,
+    processed,
+    status,
+    price,
+    paymentMethod,
+    paymentDate,
+    text
+FROM RankedReceipts
+WHERE row_num = 1 AND processed = false;
+
 select * from receipt where customerid='0000' and orderID=(select orderID from "order" where orderGroup=322);
 
 select * from receipt join "order" o on o.orderID = receipt.orderID where Receipt.customerID='0000' and o.orderGroup=322;
