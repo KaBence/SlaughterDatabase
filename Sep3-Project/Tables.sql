@@ -26,23 +26,8 @@ create table Customer(
     address varchar(50)
 );
 
-create table Review(
-    text varchar(50),
-    star double precision,
-    farmerID varchar(50) references Farmer(phonenumber),
-    customerID varchar(50) references Customer(phonenumber),
-    orderId int references "order"(orderID),
-    primary key (farmerID,customerID)
-);
 
-create table Comment(
-    commentID serial primary key,
-    text varchar(100),
-    farmerID varchar(50),
-    customerID varchar(50),
-    username varchar(50) references "user"(phonenumber),
-    FOREIGN KEY (farmerID,customerID) references review(farmerid,customerid)
-);
+
 
 
 create table "order"(
@@ -85,6 +70,25 @@ create table OrderItem(
     foreign key (orderID) references "order"(orderID),
     foreign key (productID) references Product(productID)
 );
+
+create table Review(
+    text varchar(50),
+    star double precision,
+    farmerID varchar(50) references Farmer(phonenumber),
+    customerID varchar(50) references Customer(phonenumber),
+    orderId int references "order"(orderID),
+    primary key (farmerID,customerID)
+);
+
+create table Comment(
+    commentID serial primary key,
+    text varchar(100),
+    farmerID varchar(50),
+    customerID varchar(50),
+    username varchar(50) references "user"(phonenumber),
+    FOREIGN KEY (farmerID,customerID) references review(farmerid,customerid)
+);
+
 
  CREATE OR REPLACE FUNCTION update_availability()
 RETURNS TRIGGER AS $$
