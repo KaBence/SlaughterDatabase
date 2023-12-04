@@ -30,7 +30,7 @@ INSERT INTO "order" (orderGroup, status, "date", customerID) VALUES
 -- Insert dummy data into Product table
 INSERT INTO Product (availability, amount, "type", price, pickedDate, expirationDate, farmerID) VALUES
 (true, 100, 'Potato', 5.99, '2023-12-01', '2024-01-01', '0000'),
-(true, 500, 'Potato', 3.49, '2023-11-30', '2023-12-31', 'farmer'),
+(true, 500, 'Potato', 3.49, '2023-11-30', '2023-12-03', 'farmer'),
 (true, 75, 'Tomato', 2.49, '2023-12-01', '2023-12-15', '0000'),
 (true, 90, 'Leek', 1.99, '2023-12-03', '2023-12-12', 'farmer'),
 (true, 80, 'Corn', 2.79, '2023-12-01', '2023-12-10', 'farmer'),
@@ -57,10 +57,10 @@ INSERT INTO Product (availability, amount, "type", price, pickedDate, expiration
 (true, 75, 'Corn', 2.79, '2023-12-21', '2023-12-26', '1111'),
 (true, 65, 'Mushrooms', 3.99, '2023-12-22', '2023-12-22', '1111'),
 (true, 80, 'Cherries', 1.79, '2023-12-23', '2023-12-27', '1111'),
-(true, 70, 'Onion', 4.99, '2023-12-24', '2023-12-23', '1111'),
-(true, 90, 'Pumpkin', 2.29, '2023-12-25', '2023-12-20', '1111'),
-(true, 100, 'Strawberries', 2.79, '2023-12-26', '2023-12-21', '1111'),
-(true, 75, 'Carrot', 3.99, '2023-12-27', '2023-12-19', '1111');
+(true, 70, 'Onion', 4.99, '2023-12-24', '2023-12-28', '1111'),
+(true, 90, 'Pumpkin', 2.29, '2023-12-14', '2023-12-20', '1111'),
+(true, 100, 'Strawberries', 2.79, '2023-12-26', '2023-12-31', '1111'),
+(true, 75, 'Carrot', 3.99, '2023-12-27', '2023-12-31', '1111');
 
 -- Insert dummy data into Receipt table
 INSERT INTO Receipt (orderID, processed, status, price, paymentMethod, paymentDate, text, farmerID, customerID) VALUES
@@ -79,5 +79,5 @@ INSERT INTO Review (text, star, farmerID, customerID, orderId) VALUES
 
 -- Insert dummy data into Comment table
 INSERT INTO Comment (text, farmerID, customerID, username) VALUES
-('I love the vegetables from Farm A!', '0000', '12345', '12345'),
-('The fruit quality from Farm B is excellent!', 'farmer', 'cust', 'cust');
+('I love the vegetables from Dapper Dell!', '0000', '12345', '12345'),
+('The fruit quality from Krusty Krab is excellent!', 'farmer', 'cust', 'cust');

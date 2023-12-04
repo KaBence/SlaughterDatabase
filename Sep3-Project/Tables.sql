@@ -26,10 +26,6 @@ create table Customer(
     address varchar(50)
 );
 
-
-
-
-
 create table "order"(
     orderID serial primary key,
     orderGroup int,
@@ -89,11 +85,10 @@ create table Comment(
     FOREIGN KEY (farmerID,customerID) references review(farmerid,customerid)
 );
 
-
  CREATE OR REPLACE FUNCTION update_availability()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF NEW.amount <= 0 THEN
+    IF NEW.amount <= 0 or new.expirationdate< current_date THEN
         NEW.availability := FALSE;
     END IF;
     RETURN NEW;
@@ -101,9 +96,14 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trigger_update_availability
-BEFORE UPDATE ON Product
+BEFORE INSERT OR UPDATE ON Product
 FOR EACH ROW
 EXECUTE FUNCTION update_availability();
+
+/*
+select \"order\".orderID,p.productID,OrderItem.amount,p.type,p.price,f.farmName from orderitem join \"order\" o on o.orderID = orderitem.orderID join product p on orderitem.productID = p.productid join farmer f on f.phonenumber = p.farmerid where o.orderid=1;
+
+select OrderItem.orderID,p.productID,orderitem.amount,p.type,p.price,farmName from orderitem join distributionsystem.product p on orderitem.productID = p.productid join distributionsystem.product p2 on orderitem.productID = p2.productid join distributionsystem.farmer f on f.phonenumber = p.farmerid join "order" o on o.orderID = orderitem.orderID where o.orderGroup=1;
 
 /*
 WITH RankedReceipts AS (
@@ -146,3 +146,4 @@ select o.orderID,p.productID,OrderItem.amount,p.type,p.price,f.farmName from ord
 
 insert into receipt (orderID, processed, status, price, paymentMethod, paymentDate, text, farmerID, customerID)
 values ();
+*/
