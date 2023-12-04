@@ -78,6 +78,6 @@ INSERT INTO Review (text, star, farmerID, customerID, orderId) VALUES
 ('Fast shipping!', 4.0, 'farmer', 'cust', 2);
 
 -- Insert dummy data into Comment table
-INSERT INTO Comment (text, farmerID, customerID, username) VALUES
-('I love the vegetables from Dapper Dell!', '0000', '12345', '12345'),
-('The fruit quality from Krusty Krab is excellent!', 'farmer', 'cust', 'cust');
+INSERT INTO Comment (text, farmerID, customerID,orderid, username) VALUES
+('I love the vegetables from Dapper Dell!', '0000', '12345',1 ,'12345'),
+('The fruit quality from Krusty Krab is excellent!', 'farmer', 'cust',2 ,'cust');
