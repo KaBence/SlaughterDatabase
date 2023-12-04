@@ -76,8 +76,8 @@ create table Review(
     star double precision,
     farmerID varchar(50) references Farmer(phonenumber),
     customerID varchar(50) references Customer(phonenumber),
-    orderId int references "order"(orderID),
-    primary key (farmerID,customerID)
+    orderID int references "order"(orderID),
+    primary key (farmerID,customerID,orderID)
 );
 
 create table Comment(
@@ -85,8 +85,9 @@ create table Comment(
     text varchar(100),
     farmerID varchar(50),
     customerID varchar(50),
+    orderID int,
     username varchar(50) references "user"(phonenumber),
-    FOREIGN KEY (farmerID,customerID) references review(farmerid,customerid)
+    FOREIGN KEY (farmerID,customerID,orderID) references review(farmerID,customerID,orderID)
 );
 
 
