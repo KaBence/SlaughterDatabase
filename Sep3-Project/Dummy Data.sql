@@ -12,10 +12,10 @@ INSERT INTO "user" (phonenumber, password) VALUES
 ('1111','1111');
 
 -- Insert dummy data into Farmer table
-INSERT INTO Farmer (phonenumber, firstname, lastname, address, pestecides, farmName, rating) VALUES
-('0000', 'John', 'Doe', 'Dapper', true, 'Dapper Dell', 4.5),
-('farmer', 'Jane', 'Smith', 'Farm', false, 'Krusty Krab', 3.8),
-('1111', 'Marnie', 'Lewis', 'Cindersap Forest', true, 'Marnie"s Ranch', 3.8);
+INSERT INTO Farmer (phonenumber, firstname, lastname, address, pestecides, farmName) VALUES
+('0000', 'John', 'Doe', 'Dapper', true, 'Dapper Dell'),
+('farmer', 'Jane', 'Smith', 'Farm', false, 'Krusty Krab'),
+('1111', 'Marnie', 'Lewis', 'Cindersap Forest', true, 'Marnie"s Ranch');
 
 -- Insert dummy data into Customer table
 INSERT INTO Customer (phonenumber, firstname, lastname, address) VALUES

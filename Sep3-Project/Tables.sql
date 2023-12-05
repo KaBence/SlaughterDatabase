@@ -101,7 +101,33 @@ BEFORE INSERT OR UPDATE ON Product
 FOR EACH ROW
 EXECUTE FUNCTION update_availability();
 
+-- Create a trigger function to update the farmer's rating
+CREATE OR REPLACE FUNCTION update_farmer_rating()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Calculate the new rating based on the average of stars in reviews
+    UPDATE Farmer
+    SET rating = (
+        SELECT AVG(star)
+        FROM Review
+        WHERE farmerID = NEW.farmerID
+    )
+    WHERE phonenumber = NEW.farmerID;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create a trigger that fires after an INSERT or UPDATE on the Review table
+CREATE TRIGGER update_farmer_rating_trigger
+AFTER INSERT OR UPDATE ON Review
+FOR EACH ROW
+EXECUTE FUNCTION update_farmer_rating();
+
 /*
+select ordergroup from "order" where customerid='12345' group by ordergroup;
+
+
 select \"order\".orderID,p.productID,OrderItem.amount,p.type,p.price,f.farmName from orderitem join \"order\" o on o.orderID = orderitem.orderID join product p on orderitem.productID = p.productid join farmer f on f.phonenumber = p.farmerid where o.orderid=1;
 
 select OrderItem.orderID,p.productID,orderitem.amount,p.type,p.price,farmName from orderitem join distributionsystem.product p on orderitem.productID = p.productid join distributionsystem.product p2 on orderitem.productID = p2.productid join distributionsystem.farmer f on f.phonenumber = p.farmerid join "order" o on o.orderID = orderitem.orderID where o.orderGroup=1;
