@@ -86,7 +86,7 @@ create table Comment(
     FOREIGN KEY (farmerID,customerID,orderID) references review(farmerID,customerID,orderID)
 );
 
- CREATE OR REPLACE FUNCTION update_availability()
+CREATE OR REPLACE FUNCTION update_availability()
 RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.amount <= 0 or new.expirationdate< current_date THEN
@@ -123,54 +123,3 @@ CREATE TRIGGER update_farmer_rating_trigger
 AFTER INSERT OR UPDATE ON Review
 FOR EACH ROW
 EXECUTE FUNCTION update_farmer_rating();
-
-/*
-select ordergroup from "order" where customerid='12345' group by ordergroup;
-
-
-select \"order\".orderID,p.productID,OrderItem.amount,p.type,p.price,f.farmName from orderitem join \"order\" o on o.orderID = orderitem.orderID join product p on orderitem.productID = p.productid join farmer f on f.phonenumber = p.farmerid where o.orderid=1;
-
-select OrderItem.orderID,p.productID,orderitem.amount,p.type,p.price,farmName from orderitem join distributionsystem.product p on orderitem.productID = p.productid join distributionsystem.product p2 on orderitem.productID = p2.productid join distributionsystem.farmer f on f.phonenumber = p.farmerid join "order" o on o.orderID = orderitem.orderID where o.orderGroup=1;
-
-/*
-WITH RankedReceipts AS (
-    SELECT
-        orderID,
-        farmerID,
-        customerID,
-        processed,
-        status,
-        price,
-        paymentMethod,
-        paymentDate,
-        text,
-        ROW_NUMBER() OVER (PARTITION BY orderID ORDER BY processed DESC) AS row_num
-    FROM Receipt
-)
-SELECT
-    orderID,
-    farmerID,
-    customerID,
-    processed,
-    status,
-    price,
-    paymentMethod,
-    paymentDate,
-    text
-FROM RankedReceipts
-WHERE row_num = 1 AND processed = false;
-
-select * from receipt where customerid='0000' and orderID=(select orderID from "order" where orderGroup=322);
-
-select * from receipt join "order" o on o.orderID = receipt.orderID where Receipt.customerID='0000' and o.orderGroup=322;
-
-select o.orderID,p.productID,OrderItem.amount,p.type,p.price,f.farmName from orderitem
-    join "order" o on o.orderID = orderitem.orderID
-    join product p on orderitem.productID = p.productid
-    join farmer f on f.phonenumber = p.farmerid
-    where o.orderGroup=322;
-
-
-insert into receipt (orderID, processed, status, price, paymentMethod, paymentDate, text, farmerID, customerID)
-values ();
-*/
